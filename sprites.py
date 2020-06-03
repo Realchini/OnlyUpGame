@@ -1,6 +1,8 @@
 # Sprite classes for game
 import pygame as pg
 from settings import *
+import random
+#from random import choice
 
 vec = pg.math.Vector2
 
@@ -120,10 +122,15 @@ class Player(pg.sprite.Sprite):
 
 
 class Platform(pg.sprite.Sprite):
-    def __init__(self, x, y, w, h):
+    def __init__(self, game, x, y):
         pg.sprite.Sprite.__init__(self)
-        self.image = pg.Surface((w, h))
-        self.image.fill(GREEN)
+        self.game = game
+        images = [self.game.spritesheet.get_image(0, 288, 380, 94),
+                  self.game.spritesheet.get_image(213, 1662, 201, 100)]
+        #self.image = pg.Surface((w, h))
+        #self.image.fill(GREEN)
+        self.image = random.choice(images)
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
