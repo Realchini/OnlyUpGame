@@ -37,8 +37,9 @@ class Game:
         self.score = 0
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
+        self.powerups = pg.sprite.Group()
         self.player = Player(self)
-        self.all_sprites.add(self.player)
+        #self.all_sprites.add(self.player)
         # p1 = Platform(0, HEIGHT-40, WIDTH, 40)
         # self.all_sprites.add(p1)
         # self.platforms.add(p1)
@@ -46,9 +47,10 @@ class Game:
         # self.all_sprites.add(p2)
         # self.platforms.add(p2)
         for plat in PLATFORM_LIST:
-            p = Platform(self, *plat)
-            self.all_sprites.add(p)
-            self.platforms.add(p)
+            #p = Platform(self, *plat)
+            Platform(self, *plat)
+            #self.all_sprites.add(p)
+            #self.platforms.add(p)
         pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.run()
 
@@ -74,10 +76,12 @@ class Game:
                 for hit in hits:
                     if hit.rect.bottom > lowest.rect.bottom:
                         lowest = hit
-                if self.player.pos.y < lowest.rect.centery:
-                    self.player.pos.y = lowest.rect.top + 1
-                    self.player.vel.y = 0
-                    self.player.jumping = False
+                if self.player.pos.x < lowest.rect.right and \
+                self.player.pos.x > lowest.rect.left:
+                    if self.player.pos.y < lowest.rect.centery:
+                        self.player.pos.y = lowest.rect.top + 1
+                        self.player.vel.y = 0
+                        self.player.jumping = False
 
         # if player reaches top 1/4 of screen
         if self.player.rect.top <= HEIGHT / 4:
@@ -101,10 +105,10 @@ class Game:
         # spawn new platforms to keep average number
         while len(self.platforms) < 6:
             width = random.randrange(50, 100)
-            p = Platform(self, random.randrange(0, WIDTH - width),
-                         random.randrange(-75, -30))
-            self.platforms.add(p)
-            self.all_sprites.add(p)
+            Platform(self, random.randrange(0, WIDTH - width),
+                    random.randrange(-75, -30))
+            #self.platforms.add(p)
+            #self.all_sprites.add(p)
 
     def events(self):
         # game loop - events
