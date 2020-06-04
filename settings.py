@@ -20,7 +20,7 @@ PLAYER_JUMP = 20
 #                 (350, 200, 100, 20),
 #                 (175, 100, 50, 20),]
 
-PLATFORM_LIST = [(0, HEIGHT-40),
+PLATFORM_LIST = [(0, HEIGHT-60),
                  (WIDTH/2-50, HEIGHT*3/4),
                  (125, HEIGHT-350),
                  (350, 200),
