@@ -49,10 +49,12 @@ class Game:
             p = Platform(self, *plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
+        pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.run()
 
     def run(self):
         # game loop
+        pg.mixer.music.play(loops=-1)
         self.clock.tick(FPS)
         self.playing = True
         while self.playing:
@@ -60,6 +62,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
+        pg.mixer.music.fadeout(200)
 
     def update(self):
         # game loop - Update
@@ -129,6 +132,7 @@ class Game:
         pg.display.flip()
 
     def show_start_screen(self):
+        #pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.screen.fill(BGCOLOR)
         self.draw_text(TITLE, 48, WHITE, WIDTH / 2, HEIGHT / 4)
         self.draw_text("Arrows to move, Space to jump", 22, WHITE, WIDTH / 2, HEIGHT / 2)
