@@ -161,12 +161,8 @@ class Platform(pg.sprite.Sprite):
         self.game = game
         #images = [self.game.spritesheet.get_image(0, 288, 380, 94),
         #          self.game.spritesheet.get_image(213, 1662, 201, 100)]
-        images = [pg.image.load(path.join(game.img_dir, 'ground_grass_small.png')),
-                  pg.image.load(path.join(game.img_dir, 'ground_grass_small.png'))]
-        #for i in images:
-        #     images[i] = pg.transform.scale(images[i], (101, 50))
-        images[0] = pg.transform.smoothscale(images[0], (101, 50))
-        images[1] = pg.transform.smoothscale(images[1], (101, 50))
+        images = [pg.image.load(path.join(game.img_dir, 'ground_grass_SCALED.png')),
+                  pg.image.load(path.join(game.img_dir, 'ground_grass_small_SCALED.png'))]
         #self.image = pg.Surface((w, h))
         #self.image.fill(GREEN)
         self.image = random.choice(images)
