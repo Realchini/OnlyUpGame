@@ -137,6 +137,7 @@ class Game:
         # Die!
         if self.player.rect.bottom > HEIGHT:
             # self.playing = False
+            self.krik_sound.play()
             for sprite in self.all_sprites:
                 sprite.rect.y -= max(self.player.vel.y, 10)
                 if sprite.rect.bottom < 0:
@@ -232,6 +233,7 @@ g = Game()
 g.show_start_screen()
 while g.running:
     g.new()
+    #g.krik_sound.play()
     g.show_go_screen()
 
 pg.quit()

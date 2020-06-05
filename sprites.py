@@ -210,10 +210,12 @@ class Mob(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image_up = self.game.spritesheet.get_image(566, 510, 122, 139)
-        self.image_up.set_colorkey(BLACK)
-        self.image_down = self.game.spritesheet.get_image(568, 1534, 122, 135)
-        self.image_down.set_colorkey(BLACK)
+        #self.image_up = self.game.spritesheet.get_image(566, 510, 122, 139)
+        #self.image_up.set_colorkey(BLACK)
+        #self.image_down = self.game.spritesheet.get_image(568, 1534, 122, 135)
+        #self.image_down.set_colorkey(BLACK)
+        self.image_up = pg.image.load(path.join(game.img_dir, 'flyMan_fly_SCALED.png'))
+        self.image_down = pg.image.load(path.join(game.img_dir, 'flyMan_jump_SCALED.png'))
         self.image = self.image_up
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice([-100, WIDTH+100])
