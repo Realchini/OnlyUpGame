@@ -36,7 +36,8 @@ class Game:
     def new(self):
         # start a new game
         self.score = 0
-        self.all_sprites = pg.sprite.Group()
+        #self.all_sprites = pg.sprite.Group()
+        self.all_sprites = pg.sprite.LayeredUpdates()
         self.platforms = pg.sprite.Group()
         self.powerups = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
@@ -78,6 +79,10 @@ class Game:
         if now - self.mob_timer > 5000 + random.choice([-1000, -500, 0, 500, 1000]):
             self.mob_timer = now
             Mob(self)
+        # hit mobs?
+        mob_hits = pg.sprite.spritecollide(self.player, self.mobs, False)
+        if mob_hits:
+            self.playing = False
 
         if self.player.vel.y > 0:
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)
