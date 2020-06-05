@@ -29,6 +29,9 @@ class Game:
             except:
                 self.highscore = 0
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+        self.cloud_images = []
+        for i in range(1, 4):
+            self.cloud_images.append(pg.image.load(path.join(img_dir, 'cloud{}.png'.format(i))).convert())
         self.snd_dir = path.join(self.dir, 'sounds')
         self.jump_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jump-c-05.wav'))
         self.boost_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jetpack-3-overdrived.wav'))
@@ -41,6 +44,7 @@ class Game:
         self.platforms = pg.sprite.Group()
         self.powerups = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
+        self.clouds = pg.sprite.Group()
         self.player = Player(self)
         #self.all_sprites.add(self.player)
         # p1 = Platform(0, HEIGHT-40, WIDTH, 40)
@@ -56,6 +60,9 @@ class Game:
             #self.platforms.add(p)
         self.mob_timer = 0
         pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
+        for i in range(8):
+            c = Cloud(self)
+            c.rect.y += 500
         self.run()
 
     def run(self):
@@ -100,7 +107,11 @@ class Game:
 
         # if player reaches top 1/4 of screen
         if self.player.rect.top <= HEIGHT / 4:
+            if random.randrange(100) < 15:
+                Cloud(self)
             self.player.pos.y += max(abs(self.player.vel.y), 2)
+            for cloud in self.clouds:
+                cloud.rect.y += max(abs(self.player.vel.y/2), 2)
             for mob in self.mobs:
                 mob.rect.y += max(abs(self.player.vel.y), 2)
             for plat in self.platforms:
