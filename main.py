@@ -168,17 +168,17 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
-        self.draw_text(str(self.score), 22, WHITE, WIDTH / 2, 15)
+        self.draw_text(str(self.score), 22, TEXTCOLOR, WIDTH / 2, 15)
         # after drawing everything, flip the display
         pg.display.flip()
 
     def show_start_screen(self):
         #pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.screen.fill(BGCOLOR)
-        self.draw_text(TITLE, 48, WHITE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Arrows to move, Space to jump", 22, WHITE, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
-        self.draw_text("Highest score: " + str(self.highscore), 22, WHITE, WIDTH / 2, 15)
+        self.draw_text(TITLE, 48, DARKBLUE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text("Arrows to move, Space to jump", 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Press a key to play", 22, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("Highest score: " + str(self.highscore), 22, TEXTCOLOR, WIDTH / 2, 15)
         pg.display.flip()
         self.wait_for_key()
 
@@ -186,16 +186,16 @@ class Game:
         if not self.running:
             return
         self.screen.fill(BGCOLOR)
-        self.draw_text("GAME OVER", 48, WHITE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Score: " + str(self.score), 22, WHITE, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play again", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("GAME OVER", 48, DARKBLUE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text("Score: " + str(self.score), 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Press a key to play again", 22, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
         if self.score > self.highscore:
             self.highscore = self.score
-            self.draw_text("NEW HIGHEST SCORE!", 22, WHITE, WIDTH / 2, HEIGHT / 2 + 40)
+            self.draw_text("NEW HIGHEST SCORE!", 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
             with open(path.join(self.dir, HS_FILE), 'w') as f:
                 f.write(str(self.score))
         else:
-            self.draw_text("Highest score: " + str(self.highscore), 22, WHITE, WIDTH / 2, HEIGHT / 2 + 40)
+            self.draw_text("Highest score: " + str(self.highscore), 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
         pg.display.flip()
         self.wait_for_key()
 
