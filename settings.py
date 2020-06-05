@@ -3,7 +3,9 @@ TITLE = "UpGame"
 WIDTH = 480
 HEIGHT = 600
 FPS = 60
-FONT_NAME = 'JetBrains Mono'
+#FONT_NAME = 'JetBrains Mono'
+FONT_1 = 'fonts\Birdy Game.ttf'
+FONT_2 = 'JetBrains Mono'
 HS_FILE = "highscore.txt"
 SPRITESHEET = "spritesheet_jumper.png"
 

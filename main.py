@@ -17,7 +17,10 @@ class Game:
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         self.running = True
-        self.font_name = pg.font.match_font(FONT_NAME)
+        #self.font_name = pg.font.match_font(FONT_NAME)
+        #self.font_name = pg.font.Font('fonts\Birdy Game.ttf', 36)
+        #font_dir = path.join('fonts')
+        #self.font_name = pg.font.Font('Birdy Game.ttf', 36)
         self.load_data()
 
     def load_data(self):
@@ -168,17 +171,18 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
-        self.draw_text(str(self.score), 22, TEXTCOLOR, WIDTH / 2, 15)
+        self.draw_text(str(self.score), 22, FONT_1, TEXTCOLOR, WIDTH / 2, 15)
         # after drawing everything, flip the display
         pg.display.flip()
 
     def show_start_screen(self):
         #pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.screen.fill(BGCOLOR)
-        self.draw_text(TITLE, 48, DARKBLUE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Arrows to move, Space to jump", 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play", 22, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
-        self.draw_text("Highest score: " + str(self.highscore), 22, TEXTCOLOR, WIDTH / 2, 15)
+        #FONT_2 = pg.font.Font('font/Birdy Game.ttf', 36)
+        self.draw_text(TITLE, 48, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text("Arrows to move, Space to jump", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Press a key to play", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("Highest score: " + str(self.highscore), 22, FONT_1, TEXTCOLOR, WIDTH / 2, 15)
         pg.display.flip()
         self.wait_for_key()
 
@@ -186,16 +190,16 @@ class Game:
         if not self.running:
             return
         self.screen.fill(BGCOLOR)
-        self.draw_text("GAME OVER", 48, DARKBLUE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Score: " + str(self.score), 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play again", 22, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("GAME OVER", 48, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text("Score: " + str(self.score), 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Press a key to play again", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
         if self.score > self.highscore:
             self.highscore = self.score
-            self.draw_text("NEW HIGHEST SCORE!", 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
+            self.draw_text("NEW HIGHEST SCORE!", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
             with open(path.join(self.dir, HS_FILE), 'w') as f:
                 f.write(str(self.score))
         else:
-            self.draw_text("Highest score: " + str(self.highscore), 22, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
+            self.draw_text("Highest score: " + str(self.highscore), 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
         pg.display.flip()
         self.wait_for_key()
 
@@ -210,8 +214,9 @@ class Game:
                 if event.type == pg.KEYUP:
                     waiting = False
 
-    def draw_text(self, text, size, color, x, y):
-        font = pg.font.Font(self.font_name, size)
+    def draw_text(self, text, size, font, color, x, y):
+        #font = pg.font.Font(self.font_name, size)
+        font = pg.font.Font(font, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)

@@ -32,7 +32,7 @@ class Player(pg.sprite.Sprite):
         self.jumping = False
         self.current_frame = 0
         self.last_update = 0
-        self.load_images()
+        self.load_images(game)
         # self.image = pg.Surface((30,40))
         #self.image = self.game.spritesheet.get_image(614, 1063, 120, 191)
         self.image = self.standing_frames[0]
@@ -46,19 +46,24 @@ class Player(pg.sprite.Sprite):
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
-    def load_images(self):
-        self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
-                                self.game.spritesheet.get_image(690, 406, 120, 201),]
-        for frame in self.standing_frames:
-            frame.set_colorkey(BLACK)
-        self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
-                              self.game.spritesheet.get_image(692, 1458, 120, 207)]
+    def load_images(self, game):
+        #self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
+        #                        self.game.spritesheet.get_image(690, 406, 120, 201),]
+        self.standing_frames = [pg.image.load(path.join(self.game.img_dir, 'bunny1_ready_SCALED.png')),
+                  pg.image.load(path.join(self.game.img_dir, 'bunny1_stand_SCALED.png'))]
+        #for frame in self.standing_frames:
+        #    frame.set_colorkey(BLACK)
+        #self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
+        #                      self.game.spritesheet.get_image(692, 1458, 120, 207)]
+        self.walk_frames_r = [pg.image.load(path.join(self.game.img_dir, 'bunny1_walk1_SCALED.png')),
+                  pg.image.load(path.join(self.game.img_dir, 'bunny1_walk2_SCALED.png'))]
         self.walk_frames_l = []
         for frame in self.walk_frames_r:
-            frame.set_colorkey(BLACK)
+        #    frame.set_colorkey(BLACK)
             self.walk_frames_l.append(pg.transform.flip(frame, True, False))
-        self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
-        self.jump_frame.set_colorkey(BLACK)
+        #self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
+        self.jump_frame = pg.image.load(path.join(self.game.img_dir, 'bunny1_jump_SCALED.png'))
+        #self.jump_frame.set_colorkey(BLACK)
 
     #def jump_cut(self):
     #    if self.jumping:
