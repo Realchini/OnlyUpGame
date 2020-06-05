@@ -22,16 +22,16 @@ class Game:
 
     def load_data(self):
         self.dir = path.dirname(__file__)
-        img_dir = path.join(self.dir, 'img')
+        self.img_dir = path.join(self.dir, 'img')
         with open(path.join(self.dir, HS_FILE), 'r') as f:
             try:
                 self.highscore = int(f.read())
             except:
                 self.highscore = 0
-        self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+        self.spritesheet = Spritesheet(path.join(self.img_dir, SPRITESHEET))
         self.cloud_images = []
         for i in range(1, 4):
-            self.cloud_images.append(pg.image.load(path.join(img_dir, 'cloud{}.png'.format(i))).convert())
+            self.cloud_images.append(pg.image.load(path.join(self.img_dir, 'cloud{}.png'.format(i))).convert())
         self.snd_dir = path.join(self.dir, 'sounds')
         self.jump_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jump-c-05.wav'))
         self.boost_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jetpack-3-overdrived.wav'))
