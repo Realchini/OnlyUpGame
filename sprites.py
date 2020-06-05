@@ -2,8 +2,7 @@
 import pygame as pg
 from settings import *
 import random
-
-# from random import choice
+#from random import choice
 
 vec = pg.math.Vector2
 
@@ -21,6 +20,7 @@ class Spritesheet:
         return image
 
 
+
 class Player(pg.sprite.Sprite):
     def __init__(self, game):
         self._layer = PLAYER_LAYER
@@ -33,9 +33,9 @@ class Player(pg.sprite.Sprite):
         self.last_update = 0
         self.load_images()
         # self.image = pg.Surface((30,40))
-        # self.image = self.game.spritesheet.get_image(614, 1063, 120, 191)
+        #self.image = self.game.spritesheet.get_image(614, 1063, 120, 191)
         self.image = self.standing_frames[0]
-        # self.image.set_colorkey(BLACK)
+        #self.image.set_colorkey(BLACK)
         # self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
@@ -47,7 +47,7 @@ class Player(pg.sprite.Sprite):
 
     def load_images(self):
         self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
-                                self.game.spritesheet.get_image(690, 406, 120, 201), ]
+                                self.game.spritesheet.get_image(690, 406, 120, 201),]
         for frame in self.standing_frames:
             frame.set_colorkey(BLACK)
         self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
@@ -59,7 +59,7 @@ class Player(pg.sprite.Sprite):
         self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
         self.jump_frame.set_colorkey(BLACK)
 
-    # def jump_cut(self):
+    #def jump_cut(self):
     #    if self.jumping:
     #        if self.vel.y < -3:
     #            self.vel.y = -3
@@ -68,9 +68,9 @@ class Player(pg.sprite.Sprite):
         self.rect.x += 2
         hits = pg.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 2
-        # if hits and not self.jumping:
+        #if hits and not self.jumping:
         if hits:
-            # self.jumping = True
+            #self.jumping = True
             self.game.jump_sound.play()
             self.vel.y = -PLAYER_JUMP
 
@@ -93,12 +93,12 @@ class Player(pg.sprite.Sprite):
         self.pos += self.vel + 0.5 * self.acc  # формула перемещения из физики
         if abs(self.vel.x) < 0.1:
             self.vel.x = 0
-        # self.rect.center = self.pos
+        #self.rect.center = self.pos
 
-        if self.pos.x > WIDTH + self.rect.width / 2:
-            self.pos.x = 0 - self.rect.width / 2
-        if self.pos.x < 0 - self.rect.width / 2:
-            self.pos.x = WIDTH + self.rect.width / 2
+        if self.pos.x > WIDTH + self.rect.width/2:
+            self.pos.x = 0 - self.rect.width/2
+        if self.pos.x < 0 - self.rect.width/2:
+            self.pos.x = WIDTH + self.rect.width/2
 
         self.rect.midbottom = self.pos
 
@@ -129,7 +129,7 @@ class Player(pg.sprite.Sprite):
                 self.image = self.standing_frames[self.current_frame]
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
-        self.mask = pg.mask.from_surface(self.image)
+
 
 
 class Platform(pg.sprite.Sprite):
@@ -140,8 +140,8 @@ class Platform(pg.sprite.Sprite):
         self.game = game
         images = [self.game.spritesheet.get_image(0, 288, 380, 94),
                   self.game.spritesheet.get_image(213, 1662, 201, 100)]
-        # self.image = pg.Surface((w, h))
-        # self.image.fill(GREEN)
+        #self.image = pg.Surface((w, h))
+        #self.image.fill(GREEN)
         self.image = random.choice(images)
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
@@ -149,6 +149,7 @@ class Platform(pg.sprite.Sprite):
         self.rect.y = y
         if random.randrange(100) < POW_SPAWN_PCT:
             Pow(self.game, self)
+
 
 
 class Pow(pg.sprite.Sprite):
@@ -159,8 +160,8 @@ class Pow(pg.sprite.Sprite):
         self.game = game
         self.plat = plat
         self.type = random.choice(['boost'])
-        # self.image = pg.Surface((w, h))
-        # self.image.fill(GREEN)
+        #self.image = pg.Surface((w, h))
+        #self.image.fill(GREEN)
         self.image = self.game.spritesheet.get_image(820, 1805, 71, 70)
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
@@ -171,6 +172,7 @@ class Pow(pg.sprite.Sprite):
         self.rect.bottom = self.plat.rect.top - 5
         if not self.game.platforms.has(self.plat):
             self.kill()
+
 
 
 class Mob(pg.sprite.Sprite):
@@ -185,11 +187,11 @@ class Mob(pg.sprite.Sprite):
         self.image_down.set_colorkey(BLACK)
         self.image = self.image_up
         self.rect = self.image.get_rect()
-        self.rect.centerx = random.choice([-100, WIDTH + 100])
+        self.rect.centerx = random.choice([-100, WIDTH+100])
         self.vx = random.randrange(1, 4)
         if self.rect.centerx > WIDTH:
             self.vx *= -1
-        self.rect.y = random.randrange(HEIGHT / 2)
+        self.rect.y = random.randrange(HEIGHT/2)
         self.vy = 0
         self.dy = 0.5
 
@@ -204,8 +206,7 @@ class Mob(pg.sprite.Sprite):
         else:
             self.image = self.image_down
         self.rect = self.image.get_rect()
-        self.mask = pg.mask.from_surface(self.image)
         self.rect.center = center
         self.rect.y += self.vy
-        if self.rect.left > WIDTH + 100 or self.rect.right < -100:
+        if self.rect.left > WIDTH+100 or self.rect.right < -100:
             self.kill()

@@ -80,7 +80,7 @@ class Game:
             self.mob_timer = now
             Mob(self)
         # hit mobs?
-        mob_hits = pg.sprite.spritecollide(self.player, self.mobs, False, pg.sprite.collide_mask)
+        mob_hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if mob_hits:
             self.playing = False
 
