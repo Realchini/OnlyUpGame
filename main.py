@@ -38,6 +38,7 @@ class Game:
         self.snd_dir = path.join(self.dir, 'sounds')
         self.jump_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jump-c-05.wav'))
         self.boost_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jetpack-3-overdrived.wav'))
+        self.krik_sound = pg.mixer.Sound(path.join(self.snd_dir, 'krik.ogg'))
 
     def new(self):
         # start a new game
@@ -92,6 +93,7 @@ class Game:
         # hit mobs?
         mob_hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if mob_hits:
+            self.krik_sound.play()
             self.playing = False
 
         if self.player.vel.y > 0:
@@ -179,10 +181,13 @@ class Game:
         #pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.screen.fill(BGCOLOR)
         #FONT_2 = pg.font.Font('font/Birdy Game.ttf', 36)
-        self.draw_text(TITLE, 80, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1/3)
-        self.draw_text("(Arrows to move, Space to jump)", 18, FONT_4, TEXTCOLOR, WIDTH / 2, HEIGHT * 4/5)
-        self.draw_text("Press a key to play", 22, FONT_3, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Highest score: " + str(self.highscore), 18, FONT_4, TEXTCOLOR, WIDTH / 2, 15)
+        self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1/3)
+        self.draw_text("(Влево/вправо - стрелки, прыжок - пробел)", 16, FONT_TT_MED, TEXTCOLOR, WIDTH / 2, HEIGHT * 4 / 5)
+        self.draw_text("Нажмите любую клавишу", 22, FONT_TT_BOLD, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Рекорд: " + str(self.highscore), 18, FONT_TT_MED, TEXTCOLOR, WIDTH / 2, 15)
+        #for i in range(8):
+        #    c = Cloud(self)
+        #    c.rect.y += 500
         pg.display.flip()
         self.wait_for_key()
 
@@ -190,16 +195,16 @@ class Game:
         if not self.running:
             return
         self.screen.fill(BGCOLOR)
-        self.draw_text("GAME OVER", 48, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Score: " + str(self.score), 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play again", 22, FONT_3, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("GAME OVER", 72, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text("Счёт: " + str(self.score), 22, FONT_TT_BOLD, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Нажмите, чтобы играть снова", 22, FONT_TT_MED, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
         if self.score > self.highscore:
             self.highscore = self.score
             self.draw_text("NEW HIGHEST SCORE!", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
             with open(path.join(self.dir, HS_FILE), 'w') as f:
                 f.write(str(self.score))
         else:
-            self.draw_text("Highest score: " + str(self.highscore), 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
+            self.draw_text("Рекорд: " + str(self.highscore), 22, FONT_TT_MED, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
         pg.display.flip()
         self.wait_for_key()
 

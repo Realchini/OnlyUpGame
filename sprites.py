@@ -190,7 +190,8 @@ class Pow(pg.sprite.Sprite):
         self.type = random.choice(['boost'])
         #self.image = pg.Surface((w, h))
         #self.image.fill(GREEN)
-        self.image = self.game.spritesheet.get_image(820, 1805, 71, 70)
+        #self.image = self.game.spritesheet.get_image(820, 1805, 71, 70)
+        self.image = pg.image.load(path.join(game.img_dir, 'jetpack_item_SCALED.png'))
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.centerx = self.plat.rect.centerx
