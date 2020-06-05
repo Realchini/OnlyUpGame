@@ -111,7 +111,8 @@ class Game:
                 Cloud(self)
             self.player.pos.y += max(abs(self.player.vel.y), 2)
             for cloud in self.clouds:
-                cloud.rect.y += max(abs(self.player.vel.y/2), 2)
+                prlx = random.randrange(20, 100) / 10
+                cloud.rect.y += max(abs(self.player.vel.y/prlx), 2)
             for mob in self.mobs:
                 mob.rect.y += max(abs(self.player.vel.y), 2)
             for plat in self.platforms:
