@@ -31,6 +31,7 @@ class Game:
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
         self.snd_dir = path.join(self.dir, 'sounds')
         self.jump_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jump-c-05.wav'))
+        self.boost_sound = pg.mixer.Sound(path.join(self.snd_dir, 'jetpack-3-overdrived.wav'))
 
     def new(self):
         # start a new game
@@ -38,6 +39,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.powerups = pg.sprite.Group()
+        self.mobs = pg.sprite.Group()
         self.player = Player(self)
         #self.all_sprites.add(self.player)
         # p1 = Platform(0, HEIGHT-40, WIDTH, 40)
@@ -51,6 +53,7 @@ class Game:
             Platform(self, *plat)
             #self.all_sprites.add(p)
             #self.platforms.add(p)
+        self.mob_timer = 0
         pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.run()
 
@@ -69,6 +72,13 @@ class Game:
     def update(self):
         # game loop - Update
         self.all_sprites.update()
+
+        #spawn a mob?
+        now = pg.time.get_ticks()
+        if now - self.mob_timer > 5000 + random.choice([-1000, -500, 0, 500, 1000]):
+            self.mob_timer = now
+            Mob(self)
+
         if self.player.vel.y > 0:
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
@@ -86,11 +96,21 @@ class Game:
         # if player reaches top 1/4 of screen
         if self.player.rect.top <= HEIGHT / 4:
             self.player.pos.y += max(abs(self.player.vel.y), 2)
+            for mob in self.mobs:
+                mob.rect.y += max(abs(self.player.vel.y), 2)
             for plat in self.platforms:
                 plat.rect.y += max(abs(self.player.vel.y), 2)
                 if plat.rect.top >= HEIGHT:
                     plat.kill()
                     self.score += 10
+
+        # if player hits powerup
+        pow_hits = pg.sprite.spritecollide(self.player, self.powerups, True)
+        for pow in pow_hits:
+            if pow.type == 'boost':
+                self.boost_sound.play()
+                self.player.vel.y = -BOOST_POWER
+                self.player.jumping = False
 
         # Die!
         if self.player.rect.bottom > HEIGHT:
