@@ -6,6 +6,8 @@ FPS = 60
 #FONT_NAME = 'JetBrains Mono'
 FONT_1 = 'fonts\Birdy Game.ttf'
 FONT_2 = 'JetBrains Mono'
+FONT_3 = 'fonts\TTNorms\TTNorms-Bold.ttf'
+FONT_4 = 'fonts\TTNorms\TTNorms-Medium.ttf'
 HS_FILE = "highscore.txt"
 SPRITESHEET = "spritesheet_jumper.png"
 

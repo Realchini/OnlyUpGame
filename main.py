@@ -179,10 +179,10 @@ class Game:
         #pg.mixer.music.load(path.join(self.snd_dir, 'Caketown 1.ogg'))
         self.screen.fill(BGCOLOR)
         #FONT_2 = pg.font.Font('font/Birdy Game.ttf', 36)
-        self.draw_text(TITLE, 48, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Arrows to move, Space to jump", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
-        self.draw_text("Highest score: " + str(self.highscore), 22, FONT_1, TEXTCOLOR, WIDTH / 2, 15)
+        self.draw_text(TITLE, 80, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1/3)
+        self.draw_text("(Arrows to move, Space to jump)", 18, FONT_4, TEXTCOLOR, WIDTH / 2, HEIGHT * 4/5)
+        self.draw_text("Press a key to play", 22, FONT_3, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Highest score: " + str(self.highscore), 18, FONT_4, TEXTCOLOR, WIDTH / 2, 15)
         pg.display.flip()
         self.wait_for_key()
 
@@ -192,7 +192,7 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.draw_text("GAME OVER", 48, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT / 4)
         self.draw_text("Score: " + str(self.score), 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press a key to play again", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("Press a key to play again", 22, FONT_3, TEXTCOLOR, WIDTH / 2, HEIGHT * 3 / 4)
         if self.score > self.highscore:
             self.highscore = self.score
             self.draw_text("NEW HIGHEST SCORE!", 22, FONT_1, TEXTCOLOR, WIDTH / 2, HEIGHT / 2 + 40)
