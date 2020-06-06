@@ -192,6 +192,14 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
+    def show_menu(self):
+        self.screen.fill(BGCOLOR)
+        #self.start_btn = Button(100, 30)
+        btn_image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
+        self.screen.blit(btn_image, (0, 0))
+        pg.display.flip()
+        self.wait_for_key()
+
     def show_go_screen(self):
         if not self.running:
             return
@@ -228,9 +236,52 @@ class Game:
         text_rect.midtop = (x, y)
         self.screen.blit(text_surface, text_rect)
 
+    def draw_button(self, image, text, size, font, color, x, y):
+        #font = pg.font.Font(self.font_name, size)
+        font = pg.font.Font(font, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (x, y)
+        self.screen.blit(text_surface, text_rect)
+
+
+
+class Button:
+    global sounds_on
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.inactive_color = (118, 4, 189)
+        self.active_color = (129, 9, 203)
+
+    def draw(self, x, y, message, action=None, font_size=30):
+        mouse = pg.mouse.get_pos()
+        click = pg.mouse.get_pressed()
+
+        if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
+            pg.draw.rect(Game.screen, self.active_color, (x, y, self.width, self.height))
+
+            if click[0] == 1:
+                #if sounds_on:
+                #    pg.mixer.Sound.play(sound_button_click)
+                pg.time.delay(300)
+                if action is not None:
+                    if action == quit:
+                        pg.quit()
+                        quit()
+                    else:
+                        action()
+
+        else:
+            pg.draw.rect(Game.screen, self.inactive_color, (x, y, self.width, self.height))
+
+        #print_text(message=message, x=x + 10, y=y + 10, font_size=font_size)
+
 
 g = Game()
-g.show_start_screen()
+#g.show_start_screen()
+g.show_menu()
 while g.running:
     g.new()
     #g.krik_sound.play()
