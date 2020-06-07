@@ -232,6 +232,7 @@ class Game:
             self.background = pg.image.load(path.join(self.img_dir, 'menu_background.png'))
             self.screen.blit(self.background, (0,0))
             self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1 / 5)
+            self.draw_text('Made by Roman Chavyr, 2020', 14, FONT_TT_MED, DARKGREY, WIDTH / 2, HEIGHT - 50)
 
             # waiting = True
             # while waiting:
@@ -343,7 +344,10 @@ class Button:
         self.image_rect = self.image.get_rect()
         self.image_rect.center = (self.x, self.y)
 
-        font = pg.font.Font(FONT_TT_BOLD, 24)
+        if self.selected:
+            font = pg.font.Font(FONT_TT_BOLD, 28)
+        else:
+            font = pg.font.Font(FONT_TT_BOLD, 24)
         text_surface = font.render(self.text, True, WHITE)
         text_rect = text_surface.get_rect()
         text_rect.center = (self.x, self.y)
