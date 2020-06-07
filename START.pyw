@@ -3,7 +3,6 @@ import random
 from settings import *
 from sprites import *
 from os import path
-import webbrowser
 
 
 class Game:
@@ -193,85 +192,23 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
-    # def show_menu(self):
-    #     self.screen.fill(BGCOLOR)
-    #     self.background = pg.image.load(path.join(self.img_dir, 'menu_background.png'))
-    #     self.screen.blit(self.background, (0,0))
-    #     self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1 / 5)
-    #
-    #     btn_start = Button(WIDTH/2, 280, 'Начать')
-    #     btn_start.selected = True
-    #     btn_start.draw()
-    #     btn_info = Button(WIDTH / 2, 350, 'Инфо')
-    #     btn_info.draw()
-    #     btn_quit = Button(WIDTH / 2, 420, 'Выйти')
-    #     btn_quit.draw()
-    #     btn_list = [btn_start, btn_info, btn_quit]
-    #     self.draw_text('Made by Roman Chavyr, 2020', 14, FONT_TT_MED, DARKGREY, WIDTH/2, HEIGHT-50)
-    #
-    #     waiting = True
-    #     while waiting:
-    #         for event in pg.event.get():
-    #             if event.type == pg.KEYUP:
-    #                 if event.key == pg.K_DOWN:
-    #                     #self.draw_text('Made by Roman Chavyr, 2020', 14, FONT_TT_MED, DARKGREY, WIDTH / 2, HEIGHT - 70)
-    #                     btn_list[2].selected = True
-    #                     #btn_list[2].draw()
-    #                     #pg.display.flip()
-    #                     pg.display.flip()
-    #
-    #     pg.display.flip()
-    #     self.wait_for_key()
-
     def show_menu(self):
-        menu = Menu()
-        menu.buttons[0].selected = True
-        in_menu = True
-        while in_menu:
-            self.screen.fill(BGCOLOR)
-            self.background = pg.image.load(path.join(self.img_dir, 'menu_background.png'))
-            self.screen.blit(self.background, (0,0))
-            self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1 / 5)
-
-            # waiting = True
-            # while waiting:
-            #     for event in pg.event.get():
-            #         if event.type == pg.KEYUP:
-            #             if event.key == pg.K_DOWN:
-            #                 menu.buttons[select].selected = True
-            #                 select+=1
-            #                 pg.display.flip()
-            #                 waiting = False
-
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    in_menu = False
-                    self.running = False
-                if event.type == pg.KEYUP:
-                    if event.key == pg.K_DOWN:
-                        menu.next()
-                    if event.key == pg.K_UP:
-                        menu.prev()
-                    if event.key == pg.K_RETURN:
-                        if menu.selected == 0:
-                            return
-                        if menu.selected == 1:
-                            webbrowser.open('https://github.com/Realchini/OnlyUpGame', new=2)
-                        if menu.selected == 2:
-                            in_menu = False
-                            self.running = False
-
-            # for event in pg.event.get():
-            #     if event.type == pg.KEYUP:
-            #         if event.key == pg.K_UP:
-            #             menu.prev()
-            #menu.buttons[menu.selected].selected = True
-            for i in menu.buttons:
-                #i.selected = True
-                i.draw()
-
-            pg.display.flip()
-            #self.wait_for_key()
+        self.screen.fill(BGCOLOR)
+        self.background = pg.image.load(path.join(self.img_dir, 'menu_background.png'))
+        self.screen.blit(self.background, (0,0))
+        self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1 / 5)
+        #self.start_btn = Button(100, 30)
+        #btn_image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
+        #self.screen.blit(btn_image, (0, 0))
+        btn_start = Button()
+        btn_start.draw(WIDTH/2, 280, 'Начать')
+        btn_start = Button()
+        btn_start.draw(WIDTH / 2, 350, 'Инфо')
+        btn_start = Button()
+        btn_start.draw(WIDTH / 2, 420, 'Выйти')
+        self.draw_text('Made by Roman Chavyr, 2020', 14, FONT_TT_MED, DARKGREY, WIDTH/2, HEIGHT-50)
+        pg.display.flip()
+        self.wait_for_key()
 
     def show_go_screen(self):
         if not self.running:
@@ -299,8 +236,7 @@ class Game:
                     waiting = False
                     self.running = False
                 if event.type == pg.KEYUP:
-                    if event.key == pg.K_SPACE:
-                        waiting = False
+                    waiting = False
 
     def draw_text(self, text, size, font, color, x, y):
         #font = pg.font.Font(self.font_name, size)
@@ -321,62 +257,32 @@ class Game:
 
 
 class Button:
-    def __init__(self, x, y, text, selected=False):
+    def __init__(self):
         self.dir = path.dirname(__file__)
         self.img_dir = path.join(self.dir, 'img')
-        self.selected = selected
-        # if self.selected:
-        #     self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_for_menu_selected.png'))
-        # else:
-        #     self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_for_menu.png'))
-        self.x = x
-        self.y = y
-        self.text = text
+        self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
 
-    def draw(self):
+    def draw(self, x, y, text):
         #mouse = pg.mouse.get_pos()
         #click = pg.mouse.get_pressed()
-        if self.selected:
-            self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_for_menu_selected.png'))
-        else:
-            self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_for_menu.png'))
-        self.image_rect = self.image.get_rect()
-        self.image_rect.center = (self.x, self.y)
 
-        font = pg.font.Font(FONT_TT_BOLD, 24)
-        text_surface = font.render(self.text, True, WHITE)
+        self.image_rect = self.image.get_rect()
+        self.image_rect.center = (x, y)
+
+        font = pg.font.Font(FONT_TT_BOLD, 22)
+        text_surface = font.render(text, True, WHITE)
         text_rect = text_surface.get_rect()
-        text_rect.center = (self.x, self.y)
+        text_rect.center = (x, y)
+
+        # opacity = 200
+        # for opacity in range(255, 0, -15):
+        #     work_img = self.image.copy()
+        #     pg.draw.rect(work_img, (255, 0, 0, opacity), (0, 0, 640, 480))
+        #     g.screen.blit(work_img, (0, 0))
 
         g.screen.blit(self.image, self.image_rect)
         g.screen.blit(text_surface, text_rect)
 
-
-
-class Menu:
-    def __init__(self):
-        self.selected = 0
-        self.buttons = [Button(WIDTH / 2, 280, 'Начать'), Button(WIDTH / 2, 350, 'Инфо'), Button(WIDTH / 2, 420, 'Выйти')]
-
-    def next(self):
-        if self.selected < 2:
-            self.selected += 1
-        else:
-            self.selected = 0
-        self.buttons[self.selected].selected = True
-        for i in self.buttons:
-            if i != self.buttons[self.selected]:
-                i.selected = False
-
-    def prev(self):
-        if self.selected > 0:
-            self.selected -= 1
-        else:
-            self.selected = 2
-        self.buttons[self.selected].selected = True
-        for i in self.buttons:
-            if i != self.buttons[self.selected]:
-                i.selected = False
 
 
 # class Button:
