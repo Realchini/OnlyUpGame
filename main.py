@@ -138,12 +138,13 @@ class Game:
         # Die!
         if self.player.rect.bottom > HEIGHT:
             # self.playing = False
-            self.krik_sound.play()
+            #self.krik_sound.play()
             for sprite in self.all_sprites:
                 sprite.rect.y -= max(self.player.vel.y, 10)
                 if sprite.rect.bottom < 0:
                     sprite.kill()
         if len(self.platforms) == 0:
+            self.krik_sound.play()
             self.playing = False
 
         # spawn new platforms to keep average number
