@@ -345,7 +345,7 @@ class Button:
         self.image_rect.center = (self.x, self.y)
 
         if self.selected:
-            font = pg.font.Font(FONT_TT_BOLD, 27)
+            font = pg.font.Font(FONT_TT_BOLD, 28)
         else:
             font = pg.font.Font(FONT_TT_BOLD, 22)
         text_surface = font.render(self.text, True, WHITE)
