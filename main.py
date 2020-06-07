@@ -194,9 +194,17 @@ class Game:
 
     def show_menu(self):
         self.screen.fill(BGCOLOR)
+        self.draw_text(TITLE, 86, FONT_1, DARKBLUE, WIDTH / 2, HEIGHT * 1 / 5)
         #self.start_btn = Button(100, 30)
-        btn_image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
-        self.screen.blit(btn_image, (0, 0))
+        #btn_image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
+        #self.screen.blit(btn_image, (0, 0))
+        btn_start = Button()
+        btn_start.draw(WIDTH/2, 280, 'Начать')
+        btn_start = Button()
+        btn_start.draw(WIDTH / 2, 350, 'Инфо')
+        btn_start = Button()
+        btn_start.draw(WIDTH / 2, 420, 'Выйти')
+        self.draw_text('Made by Roman Chavyr, 2020', 14, FONT_TT_MED, DARKGREY, WIDTH/2, HEIGHT-50)
         pg.display.flip()
         self.wait_for_key()
 
@@ -236,47 +244,81 @@ class Game:
         text_rect.midtop = (x, y)
         self.screen.blit(text_surface, text_rect)
 
-    def draw_button(self, image, text, size, font, color, x, y):
-        #font = pg.font.Font(self.font_name, size)
-        font = pg.font.Font(font, size)
-        text_surface = font.render(text, True, color)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        self.screen.blit(text_surface, text_rect)
+    # def draw_button(self, image, text, size, font, color, x, y):
+    #     #font = pg.font.Font(self.font_name, size)
+    #     font = pg.font.Font(font, size)
+    #     text_surface = font.render(text, True, color)
+    #     text_rect = text_surface.get_rect()
+    #     text_rect.midtop = (x, y)
+    #     self.screen.blit(text_surface, text_rect)
 
 
 
 class Button:
-    global sounds_on
+    def __init__(self):
+        self.dir = path.dirname(__file__)
+        self.img_dir = path.join(self.dir, 'img')
+        self.image = pg.image.load(path.join(self.img_dir, 'ground_grass_SCALED.png'))
 
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.inactive_color = (118, 4, 189)
-        self.active_color = (129, 9, 203)
+    def draw(self, x, y, text):
+        #mouse = pg.mouse.get_pos()
+        #click = pg.mouse.get_pressed()
 
-    def draw(self, x, y, message, action=None, font_size=30):
-        mouse = pg.mouse.get_pos()
-        click = pg.mouse.get_pressed()
+        self.image_rect = self.image.get_rect()
+        self.image_rect.center = (x, y)
 
-        if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
-            pg.draw.rect(Game.screen, self.active_color, (x, y, self.width, self.height))
+        font = pg.font.Font(FONT_TT_BOLD, 22)
+        text_surface = font.render(text, True, WHITE)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
 
-            if click[0] == 1:
-                #if sounds_on:
-                #    pg.mixer.Sound.play(sound_button_click)
-                pg.time.delay(300)
-                if action is not None:
-                    if action == quit:
-                        pg.quit()
-                        quit()
-                    else:
-                        action()
+        # opacity = 200
+        # for opacity in range(255, 0, -15):
+        #     work_img = self.image.copy()
+        #     pg.draw.rect(work_img, (255, 0, 0, opacity), (0, 0, 640, 480))
+        #     g.screen.blit(work_img, (0, 0))
 
-        else:
-            pg.draw.rect(Game.screen, self.inactive_color, (x, y, self.width, self.height))
+        g.screen.blit(self.image, self.image_rect)
+        g.screen.blit(text_surface, text_rect)
 
-        #print_text(message=message, x=x + 10, y=y + 10, font_size=font_size)
+
+
+# class Button:
+#     global sounds_on
+#
+#     def __init__(self, width, height):
+#         self.width = width
+#         self.height = height
+#         self.inactive_color = (118, 4, 189)
+#         self.active_color = (129, 9, 203)
+#
+#     def draw(self, game, x, y, message, action=None, font_size=30):
+#         mouse = pg.mouse.get_pos()
+#         click = pg.mouse.get_pressed()
+#
+#         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
+#             pg.draw.rect(game.screen, self.active_color, (x, y, self.width, self.height))
+#
+#             if click[0] == 1:
+#                 #if sounds_on:
+#                 #    pg.mixer.Sound.play(sound_button_click)
+#                 pg.time.delay(300)
+#                 if action is not None:
+#                     if action == quit:
+#                         pg.quit()
+#                         quit()
+#                     else:
+#                         action()
+#
+#         else:
+#             pg.draw.rect(game.screen, self.inactive_color, (x, y, self.width, self.height))
+#
+#         self.print_text(message, x, y, font_size=font_size)
+#
+#     def print_text(message, x, y, font_color=(0, 0, 0), font_type='freesansbold.ttf', font_size=32):
+#         font_type = pg.font.Font(font_type, font_size)
+#         text = font_type.render(message, True, font_color)
+#         g.screen.blit(text, (x, y))
 
 
 g = Game()
