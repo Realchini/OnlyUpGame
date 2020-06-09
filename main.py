@@ -85,6 +85,7 @@ class Game:
     def update(self):
         # Апдейт
         self.all_sprites.update()
+        self.last_spawn_score = 0
 
         # спавн врагов
         now = pg.time.get_ticks()
@@ -126,6 +127,10 @@ class Game:
                 if plat.rect.top >= HEIGHT:
                     plat.kill()
                     self.score += 10
+
+        # усложнение игры
+        if self.score-self.last_spawn_score > 100:
+            MOB_FREQ -= 1000
 
         # касание ускорителя
         pow_hits = pg.sprite.spritecollide(self.player, self.powerups, True)
