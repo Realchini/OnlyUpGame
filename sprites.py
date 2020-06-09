@@ -114,7 +114,7 @@ class Player(pg.sprite.Sprite):
             self.walking = True
         else:
             self.walking = False
-        # show walk animation
+        # анимация ходьбы
         if self.walking:
             if now - self.last_update > 200:
                 self.last_update = now
@@ -126,7 +126,7 @@ class Player(pg.sprite.Sprite):
                     self.image = self.walk_frames_l[self.current_frame]
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
-        # show idle animation
+        # анимация ожидания
         if not self.jumping and not self.walking:
             if now - self.last_update > 350:
                 self.last_update = now

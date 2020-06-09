@@ -42,7 +42,7 @@ class Game:
         self.krik_sound = pg.mixer.Sound(path.join(self.snd_dir, 'krik.ogg'))
 
     def new(self):
-        # start a new game
+        # начало новой игры
         self.score = 0
         #self.all_sprites = pg.sprite.Group()
         self.all_sprites = pg.sprite.LayeredUpdates()
@@ -71,7 +71,7 @@ class Game:
         self.run()
 
     def run(self):
-        # game loop
+        # ИГРОВОЙ ЦИКЛ (основа)
         pg.mixer.music.play(loops=-1)
         self.clock.tick(FPS)
         self.playing = True
@@ -83,15 +83,15 @@ class Game:
         pg.mixer.music.fadeout(200)
 
     def update(self):
-        # game loop - Update
+        # Апдейт
         self.all_sprites.update()
 
-        #spawn a mob?
+        # спавн врагов
         now = pg.time.get_ticks()
         if now - self.mob_timer > 5000 + random.choice([-1000, -500, 0, 500, 1000]):
             self.mob_timer = now
             Mob(self)
-        # hit mobs?
+        # игрок касается врага
         mob_hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if mob_hits:
             self.krik_sound.play()
@@ -111,7 +111,7 @@ class Game:
                         self.player.vel.y = 0
                         self.player.jumping = False
 
-        # if player reaches top 1/4 of screen
+        # если игрок поднимается за экран
         if self.player.rect.top <= HEIGHT / 4:
             if random.randrange(100) < 15:
                 Cloud(self)
@@ -127,7 +127,7 @@ class Game:
                     plat.kill()
                     self.score += 10
 
-        # if player hits powerup
+        # касание ускорителя
         pow_hits = pg.sprite.spritecollide(self.player, self.powerups, True)
         for pow in pow_hits:
             if pow.type == 'boost':
@@ -135,7 +135,7 @@ class Game:
                 self.player.vel.y = -BOOST_POWER
                 self.player.jumping = False
 
-        # Die!
+        # если игрок падает
         if self.player.rect.bottom > HEIGHT:
             # self.playing = False
             #self.krik_sound.play()
@@ -147,7 +147,7 @@ class Game:
             self.krik_sound.play()
             self.playing = False
 
-        # spawn new platforms to keep average number
+        # спавн новых платформ
         while len(self.platforms) < 6:
             width = random.randrange(50, 100)
             Platform(self, random.randrange(0, WIDTH - width),
@@ -156,7 +156,7 @@ class Game:
             #self.all_sprites.add(p)
 
     def events(self):
-        # game loop - events
+        # игровой цикл ивенты
         for event in pg.event.get():
             # check for closing window
             if event.type == pg.QUIT:
@@ -172,7 +172,7 @@ class Game:
             #        self.player.jump_cut()
 
     def draw(self):
-        # game loop - draw
+        # игровой цикл отрисовка
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
