@@ -19,6 +19,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.running = True
         self.mobs_freq = MOB_FREQ
+        self.last_spawn_score = 0
         #self.font_name = pg.font.match_font(FONT_NAME)
         #self.font_name = pg.font.Font('fonts\Birdy Game.ttf', 36)
         #font_dir = path.join('fonts')
@@ -86,7 +87,7 @@ class Game:
     def update(self):
         # Апдейт
         self.all_sprites.update()
-        self.last_spawn_score = 0
+        #self.last_spawn_score = 0
 
         # спавн врагов
         now = pg.time.get_ticks()
@@ -132,7 +133,8 @@ class Game:
 
         # усложнение игры
         if self.score-self.last_spawn_score > 100:
-            self.mobs_freq -= 1000
+            self.mobs_freq -= 100
+            self.last_spawn_score = self.score
 
         # касание ускорителя
         pow_hits = pg.sprite.spritecollide(self.player, self.powerups, True)
